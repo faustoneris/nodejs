@@ -21,8 +21,7 @@ const marshallOptions = {
 const options = {
     region: "us-east-1",
     endpoint: "http://dynamodb.us-east-1.amazonaws.com",
-    accessKeyId: "x",
-    secretAccessKey: "x"
+    //add secretes here
 }
 export const dynamodb = new DynamoDB(options);
 export const database = DynamoDBDocument.from(new DynamoDB(options), translateConfig);
