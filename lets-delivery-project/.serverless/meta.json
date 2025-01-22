@@ -1,0 +1,606 @@
+{
+  "/Users/fausto.neris/daily/studies/projects-node/nodejs/lets-delivery-project": {
+    "versionSfCore": null,
+    "versionFramework": "4.4.19",
+    "isWithinCompose": false,
+    "isCompose": false,
+    "composeOrgName": null,
+    "composeResolverProviders": {
+      "default-aws-credential-resolver": "<REDACTED>",
+      "self": {
+        "instance": {
+          "credentials": "<REDACTED>",
+          "serviceConfigFile": {
+            "org": "faustoneriswork",
+            "service": "crud-lets-delivery",
+            "provider": {
+              "name": "aws",
+              "runtime": "nodejs20.x",
+              "stage": "dev",
+              "region": "us-west-1",
+              "environment": {
+                "DYNAMODB_TABLE_NAME": "clients-table-dev"
+              },
+              "versionFunctions": true
+            },
+            "custom": {
+              "clientsTableName": "clients-table-dev",
+              "dynamodb": {
+                "stages": [
+                  "dev"
+                ],
+                "start": {
+                  "port": 8000,
+                  "inMemory": true
+                }
+              }
+            },
+            "plugins": [
+              "serverless-offline",
+              "serverless-dynamodb-local"
+            ],
+            "functions": {
+              "getClient": {
+                "handler": "src/modules/clients/handler/clients.getClient",
+                "name": "get-client",
+                "memorySize": 128,
+                "timeout": 5,
+                "events": [
+                  {
+                    "http": {
+                      "path": "client/{clientId}",
+                      "method": "GET"
+                    }
+                  }
+                ],
+                "iamRoleStatements": [
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "dynamodb:GetItem"
+                    ]
+                  }
+                ]
+              },
+              "createClient": {
+                "handler": "src/modules/clients/handler/clients.createClient",
+                "name": "create-client",
+                "memorySize": 128,
+                "timeout": 5,
+                "events": [
+                  {
+                    "http": {
+                      "path": "client",
+                      "method": "POST"
+                    }
+                  }
+                ],
+                "iamRoleStatements": [
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "dynamodb:PutItem"
+                    ]
+                  }
+                ]
+              },
+              "updateClient": {
+                "handler": "api.updatePost",
+                "name": "update-client",
+                "memorySize": 128,
+                "timeout": 5,
+                "events": [
+                  {
+                    "http": {
+                      "path": "client/{clientId}",
+                      "method": "PUT"
+                    }
+                  }
+                ],
+                "iamRoleStatements": [
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "dynamodb:UpdateItem"
+                    ]
+                  }
+                ]
+              },
+              "deleteClient": {
+                "handler": "api.deletePost",
+                "name": "delete-client",
+                "memorySize": 128,
+                "timeout": 5,
+                "events": [
+                  {
+                    "http": {
+                      "path": "client/{clientId}",
+                      "method": "DELETE"
+                    }
+                  }
+                ],
+                "iamRoleStatements": [
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "dynamodb:DeleteItem"
+                    ]
+                  }
+                ]
+              },
+              "getAllClients": {
+                "handler": "api.getAllPosts",
+                "name": "get-all-posts",
+                "memorySize": 128,
+                "timeout": 5,
+                "events": [
+                  {
+                    "http": {
+                      "path": "clients",
+                      "method": "GET"
+                    }
+                  }
+                ],
+                "iamRoleStatements": [
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "dynamodb:Scan"
+                    ]
+                  }
+                ]
+              }
+            },
+            "resources": {
+              "Resources": {
+                "PostsTable": {
+                  "Type": "AWS::DynamoDB::Table",
+                  "Properties": {
+                    "TableName": "clients-table-dev",
+                    "AttributeDefinitions": [
+                      {
+                        "AttributeName": "clientId",
+                        "AttributeType": "S"
+                      }
+                    ],
+                    "KeySchema": [
+                      {
+                        "AttributeName": "clientId",
+                        "KeyType": "HASH"
+                      }
+                    ],
+                    "ProvisionedThroughput": {
+                      "ReadCapacityUnits": 1,
+                      "WriteCapacityUnits": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "configFileDirPath": "/Users/fausto.neris/daily/studies/projects-node/nodejs/lets-delivery-project",
+          "config": {
+            "type": "self"
+          },
+          "options": {
+            "localPath": ".dynamodb"
+          },
+          "stage": "dev",
+          "dashboard": null,
+          "logger": {
+            "namespace": "s:core:resolver:self",
+            "prefix": null,
+            "prefixColor": null
+          },
+          "_credentialsPromise": "<REDACTED>"
+        },
+        "resolvers": {}
+      },
+      "sls": {
+        "instance": {
+          "credentials": "<REDACTED>",
+          "serviceConfigFile": {
+            "org": "faustoneriswork",
+            "service": "crud-lets-delivery",
+            "provider": {
+              "name": "aws",
+              "runtime": "nodejs20.x",
+              "stage": "dev",
+              "region": "us-west-1",
+              "environment": {
+                "DYNAMODB_TABLE_NAME": "clients-table-dev"
+              },
+              "versionFunctions": true
+            },
+            "custom": {
+              "clientsTableName": "clients-table-dev",
+              "dynamodb": {
+                "stages": [
+                  "dev"
+                ],
+                "start": {
+                  "port": 8000,
+                  "inMemory": true
+                }
+              }
+            },
+            "plugins": [
+              "serverless-offline",
+              "serverless-dynamodb-local"
+            ],
+            "functions": {
+              "getClient": {
+                "handler": "src/modules/clients/handler/clients.getClient",
+                "name": "get-client",
+                "memorySize": 128,
+                "timeout": 5,
+                "events": [
+                  {
+                    "http": {
+                      "path": "client/{clientId}",
+                      "method": "GET"
+                    }
+                  }
+                ],
+                "iamRoleStatements": [
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "dynamodb:GetItem"
+                    ]
+                  }
+                ]
+              },
+              "createClient": {
+                "handler": "src/modules/clients/handler/clients.createClient",
+                "name": "create-client",
+                "memorySize": 128,
+                "timeout": 5,
+                "events": [
+                  {
+                    "http": {
+                      "path": "client",
+                      "method": "POST"
+                    }
+                  }
+                ],
+                "iamRoleStatements": [
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "dynamodb:PutItem"
+                    ]
+                  }
+                ]
+              },
+              "updateClient": {
+                "handler": "api.updatePost",
+                "name": "update-client",
+                "memorySize": 128,
+                "timeout": 5,
+                "events": [
+                  {
+                    "http": {
+                      "path": "client/{clientId}",
+                      "method": "PUT"
+                    }
+                  }
+                ],
+                "iamRoleStatements": [
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "dynamodb:UpdateItem"
+                    ]
+                  }
+                ]
+              },
+              "deleteClient": {
+                "handler": "api.deletePost",
+                "name": "delete-client",
+                "memorySize": 128,
+                "timeout": 5,
+                "events": [
+                  {
+                    "http": {
+                      "path": "client/{clientId}",
+                      "method": "DELETE"
+                    }
+                  }
+                ],
+                "iamRoleStatements": [
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "dynamodb:DeleteItem"
+                    ]
+                  }
+                ]
+              },
+              "getAllClients": {
+                "handler": "api.getAllPosts",
+                "name": "get-all-posts",
+                "memorySize": 128,
+                "timeout": 5,
+                "events": [
+                  {
+                    "http": {
+                      "path": "clients",
+                      "method": "GET"
+                    }
+                  }
+                ],
+                "iamRoleStatements": [
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "dynamodb:Scan"
+                    ]
+                  }
+                ]
+              }
+            },
+            "resources": {
+              "Resources": {
+                "PostsTable": {
+                  "Type": "AWS::DynamoDB::Table",
+                  "Properties": {
+                    "TableName": "clients-table-dev",
+                    "AttributeDefinitions": [
+                      {
+                        "AttributeName": "clientId",
+                        "AttributeType": "S"
+                      }
+                    ],
+                    "KeySchema": [
+                      {
+                        "AttributeName": "clientId",
+                        "KeyType": "HASH"
+                      }
+                    ],
+                    "ProvisionedThroughput": {
+                      "ReadCapacityUnits": 1,
+                      "WriteCapacityUnits": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "configFileDirPath": "/Users/fausto.neris/daily/studies/projects-node/nodejs/lets-delivery-project",
+          "config": {
+            "type": "sls"
+          },
+          "options": {
+            "localPath": ".dynamodb"
+          },
+          "stage": "dev",
+          "dashboard": null,
+          "logger": {
+            "namespace": "s:core:resolver:sls",
+            "prefix": null,
+            "prefixColor": null
+          },
+          "_credentialsPromise": "<REDACTED>"
+        },
+        "resolvers": {}
+      }
+    },
+    "composeServiceName": null,
+    "servicePath": "/Users/fausto.neris/daily/studies/projects-node/nodejs/lets-delivery-project",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "org": "faustoneriswork",
+      "service": "crud-lets-delivery",
+      "provider": {
+        "name": "aws",
+        "runtime": "nodejs20.x",
+        "stage": "dev",
+        "region": "us-west-1",
+        "environment": {
+          "DYNAMODB_TABLE_NAME": "clients-table-dev"
+        },
+        "versionFunctions": true
+      },
+      "custom": {
+        "clientsTableName": "clients-table-dev",
+        "dynamodb": {
+          "stages": [
+            "dev"
+          ],
+          "start": {
+            "port": 8000,
+            "inMemory": true
+          }
+        }
+      },
+      "plugins": [
+        "serverless-offline",
+        "serverless-dynamodb-local"
+      ],
+      "functions": {
+        "getClient": {
+          "handler": "src/modules/clients/handler/clients.getClient",
+          "name": "get-client",
+          "memorySize": 128,
+          "timeout": 5,
+          "events": [
+            {
+              "http": {
+                "path": "client/{clientId}",
+                "method": "GET"
+              }
+            }
+          ],
+          "iamRoleStatements": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:GetItem"
+              ]
+            }
+          ]
+        },
+        "createClient": {
+          "handler": "src/modules/clients/handler/clients.createClient",
+          "name": "create-client",
+          "memorySize": 128,
+          "timeout": 5,
+          "events": [
+            {
+              "http": {
+                "path": "client",
+                "method": "POST"
+              }
+            }
+          ],
+          "iamRoleStatements": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:PutItem"
+              ]
+            }
+          ]
+        },
+        "updateClient": {
+          "handler": "api.updatePost",
+          "name": "update-client",
+          "memorySize": 128,
+          "timeout": 5,
+          "events": [
+            {
+              "http": {
+                "path": "client/{clientId}",
+                "method": "PUT"
+              }
+            }
+          ],
+          "iamRoleStatements": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:UpdateItem"
+              ]
+            }
+          ]
+        },
+        "deleteClient": {
+          "handler": "api.deletePost",
+          "name": "delete-client",
+          "memorySize": 128,
+          "timeout": 5,
+          "events": [
+            {
+              "http": {
+                "path": "client/{clientId}",
+                "method": "DELETE"
+              }
+            }
+          ],
+          "iamRoleStatements": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:DeleteItem"
+              ]
+            }
+          ]
+        },
+        "getAllClients": {
+          "handler": "api.getAllPosts",
+          "name": "get-all-posts",
+          "memorySize": 128,
+          "timeout": 5,
+          "events": [
+            {
+              "http": {
+                "path": "clients",
+                "method": "GET"
+              }
+            }
+          ],
+          "iamRoleStatements": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:Scan"
+              ]
+            }
+          ]
+        }
+      },
+      "resources": {
+        "Resources": {
+          "PostsTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+              "TableName": "clients-table-dev",
+              "AttributeDefinitions": [
+                {
+                  "AttributeName": "clientId",
+                  "AttributeType": "S"
+                }
+              ],
+              "KeySchema": [
+                {
+                  "AttributeName": "clientId",
+                  "KeyType": "HASH"
+                }
+              ],
+              "ProvisionedThroughput": {
+                "ReadCapacityUnits": 1,
+                "WriteCapacityUnits": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "serviceRawFile": "# \"org\" ensures this Service is used with the correct Serverless Framework Access Key.\norg: faustoneriswork\nservice: crud-lets-delivery\n\nprovider:\n  name: aws\n  runtime: nodejs20.x\n  stage: dev\n  region: us-west-1\n  environment:\n    DYNAMODB_TABLE_NAME: ${self:custom.clientsTableName}\n\ncustom:\n  clientsTableName: clients-table-${self:provider.stage}\n  dynamodb:\n    stages:\n      - dev\n    start:\n      port: 8000\n      inMemory: true\n    # Comment if you don't have a DynamoDB running locally\n      # noStart: true\n\nplugins:\n  - serverless-offline\n  - serverless-dynamodb-local\nfunctions:\n  getClient:\n    handler: src/modules/clients/handler/clients.getClient\n    name: get-client\n    memorySize: 128 # mb\n    timeout: 5 # seconds\n    events:\n      - http:\n          path: client/{clientId}\n          method: GET\n    iamRoleStatements:\n      - Effect: \"Allow\"\n        Action:\n          - \"dynamodb:GetItem\"\n  createClient:\n    handler: src/modules/clients/handler/clients.createClient\n    name: create-client\n    memorySize: 128 # mb\n    timeout: 5 # seconds\n    events:\n      - http:\n          path: client\n          method: POST\n    iamRoleStatements:\n      - Effect: \"Allow\"\n        Action:\n          - \"dynamodb:PutItem\"\n  updateClient:\n    handler: api.updatePost\n    name: update-client\n    memorySize: 128 # mb\n    timeout: 5 # seconds\n    events:\n      - http:\n          path: client/{clientId}\n          method: PUT\n    iamRoleStatements:\n      - Effect: \"Allow\"\n        Action:\n          - \"dynamodb:UpdateItem\"\n  deleteClient:\n    handler: api.deletePost\n    name: delete-client\n    memorySize: 128 # mb\n    timeout: 5 # seconds\n    events:\n      - http:\n          path: client/{clientId}\n          method: DELETE\n    iamRoleStatements:\n      - Effect: \"Allow\"\n        Action:\n          - \"dynamodb:DeleteItem\"\n  getAllClients:\n    handler: api.getAllPosts\n    name: get-all-posts\n    memorySize: 128 # mb\n    timeout: 5 # seconds\n    events:\n      - http:\n          path: clients\n          method: GET\n    iamRoleStatements:\n      - Effect: \"Allow\"\n        Action:\n          - \"dynamodb:Scan\"\n\nresources:\n  Resources:\n    PostsTable:\n      Type: AWS::DynamoDB::Table\n      Properties:\n        TableName: ${self:custom.clientsTableName}\n        AttributeDefinitions:\n          - AttributeName: clientId\n            AttributeType: S\n        KeySchema:\n          - AttributeName: clientId\n            KeyType: HASH\n        ProvisionedThroughput:\n          ReadCapacityUnits: 1\n          WriteCapacityUnits: 1\n",
+    "command": [
+      "dynamodb",
+      "install"
+    ],
+    "options": {
+      "localPath": ".dynamodb"
+    },
+    "error": {
+      "message": "Option \"localPath\" is of type \"string\" but expected type \"undefined\".",
+      "stack": "ServerlessError2: Option \"localPath\" is of type \"string\" but expected type \"undefined\".\n    at ensure_supported_command_default (file:///Users/fausto.neris/.serverless/releases/4.4.19/package/dist/sf-core.js:936:3087)\n    at runFramework (file:///Users/fausto.neris/.serverless/releases/4.4.19/package/dist/sf-core.js:980:2510)\n    at async route (file:///Users/fausto.neris/.serverless/releases/4.4.19/package/dist/sf-core.js:1010:14772)\n    at async Object.run2 [as run] (file:///Users/fausto.neris/.serverless/releases/4.4.19/package/dist/sf-core.js:1010:15173)\n    at async run3 (file:///Users/fausto.neris/.serverless/releases/4.4.19/package/dist/sf-core.js:1010:16435)",
+      "code": "INVALID_OPTION_TYPE"
+    },
+    "params": {},
+    "machineId": "891242b94581dac3772980f73df31fbb",
+    "stage": "dev",
+    "accessKeyV2": "<REDACTED>",
+    "accessKeyV1": "<REDACTED>",
+    "orgId": "163bcaf4-150e-4cd4-84ac-6474dc4f6a2e",
+    "orgName": "faustoneriswork",
+    "userId": "N0wPm0RS6yhqzwgtZQ",
+    "dashboard": {
+      "isEnabledForService": false,
+      "requiredAuthentication": false,
+      "orgFeaturesInUse": null,
+      "orgObservabilityIntegrations": null,
+      "serviceAppId": null,
+      "serviceProvider": null,
+      "instanceParameters": null
+    },
+    "userName": "faustoneriswork",
+    "subscription": null,
+    "userEmail": "fausto2102@hotmail.com",
+    "serviceProviderAwsRegion": "us-west-1",
+    "serviceProviderAwsCredentials": "<REDACTED>",
+    "serviceProviderAwsAccountId": "966793893756",
+    "projectType": "traditional",
+    "versionSf": "4.4.19",
+    "serviceProviderAwsCfStackName": "crud-lets-delivery-dev",
+    "serviceUniqueId": null,
+    "serviceProviderAwsCfStackId": null,
+    "serviceProviderAwsCfStackCreated": null,
+    "serviceProviderAwsCfStackUpdated": null,
+    "serviceProviderAwsCfStackStatus": null,
+    "serviceProviderAwsCfStackOutputs": null
+  }
+}

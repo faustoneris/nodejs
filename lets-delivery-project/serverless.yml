@@ -1,0 +1,109 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: faustoneriswork
+service: crud-lets-delivery
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  stage: dev
+  region: us-east-1
+  environment:
+    DYNAMODB_TABLE_NAME: ${self:custom.clientsTableName}
+
+custom:
+  clientsTableName: Clientes
+  dynamodb:
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+    # Comment if you don't have a DynamoDB running locally
+      noStart: true
+
+plugins:
+  - serverless-offline
+  - serverless-dynamodb-local
+
+functions:
+  getClient:
+    handler: src/modules/clients/handler/clients.getClient
+    name: get-client
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: client/{clientId}
+          method: GET
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:GetItem"
+  createClient:
+    handler: src/modules/clients/handler/clients.createClient
+    name: create-client
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: client
+          method: POST
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:PutItem"
+  updateClient:
+    handler: src/modules/clients/handler/clients.updateClient
+    name: update-client
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: client/{clientId}
+          method: PUT
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:UpdateItem"
+  deleteClient:
+    handler: src/modules/clients/handler/clients.deleteClient
+    name: delete-client
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: client/{clientId}
+          method: DELETE
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:DeleteItem"
+  getAllClients:
+    handler: src/modules/clients/handler/clients.getAllClients
+    name: get-all-posts
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: clients
+          method: GET
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+
+resources:
+  Resources:
+    PostsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.clientsTableName}
+        AttributeDefinitions:
+          - AttributeName: clientId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: clientId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
